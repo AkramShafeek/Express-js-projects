@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link id='darkui' rel="stylesheet" href="./style.css">
+    <link id='lightui' rel="stylesheet" href="./styleLightUI.css">
+    <link rel="stylesheet" href="./switch.css">
+</head>
+<body>
+    <div class="clockContainer">
+        <div id="clock">
+            <div class="number"></div>
+            <div class="number"></div>
+            <div class="number"></div>
+            <div class="number"></div>
+            <div class="number"></div>
+            <div class="number"></div>
+            <div id="handsContainer">
+                <div id="secondsHand"></div>
+                <div id="minutesHand"></div>
+                <div id="hoursHand"></div>
+                <div id="centerPivot"></div>
+            </div>
+        </div>
+    </div>
+    <!-- <button onclick="toggleui()">toggle ui</button> -->
+    <input type="checkbox" id="switch" onchange="toggleui()" /><label for="switch"></label>
+</body>
+<script src="./script.js"></script>
+
+</html>
