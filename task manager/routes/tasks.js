@@ -9,7 +9,7 @@ const {
     deleteTask
 } = require('../controllers/tasks');
 
-router.route('/').get(getAllTasks).post((req,res)=>{createTask(req,res,"akram")});
+router.route('/').get(getAllTasks).post(createTask);
 
 router.route('/:id').get(getSingleTask).patch(updateTask).delete(deleteTask);
 
