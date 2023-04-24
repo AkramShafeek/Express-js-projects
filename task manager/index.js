@@ -2,6 +2,7 @@ const express = require('express');
 const connectToMongo = require('./database/connectToMongo');
 const app = express();
 const tasks = require('./routes/tasks');
+const notFound = require('./middleware/not-found');
 require('dotenv').config();
 
 // middleware
@@ -17,6 +18,7 @@ app.use('/api/v1/tasks',tasks);
 // app.patch('/api/v1/tasks/:id')
 // app.delete('/api/v1/tasks/:id')
 
+app.use(notFound);
 
 const port = 5000;
 
