@@ -13,11 +13,6 @@ app.use(express.json());
 // routes
 app.use('/api/v1/tasks',tasks);
 
-// app.get('/api/v1/tasks')
-// app.post('/api/v1/tasks')
-// app.get('/api/v1/tasks/:id')
-// app.patch('/api/v1/tasks/:id')
-// app.delete('/api/v1/tasks/:id')
 
 app.use(notFound);
 
