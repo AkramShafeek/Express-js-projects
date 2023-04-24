@@ -3,6 +3,7 @@ const connectToMongo = require('./database/connectToMongo');
 const app = express();
 const tasks = require('./routes/tasks');
 const notFound = require('./middleware/not-found');
+const errorHandlerMiddleware = require('./middleware/errorHandler');
 require('dotenv').config();
 
 // middleware
@@ -20,7 +21,9 @@ app.use('/api/v1/tasks',tasks);
 
 app.use(notFound);
 
-const port = 5000;
+app.use(errorHandlerMiddleware);
+
+const port = process.env.PORT || 5000;
 
 const start = async () => {
     try {
