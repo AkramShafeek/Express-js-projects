@@ -15,8 +15,6 @@ const errorHandler = require('./middleware/errorHandler');
 // routers
 const productsRouter = require('./routes/products');
 
-// async errors
-
 // middleware
 app.use(express.json());
 
