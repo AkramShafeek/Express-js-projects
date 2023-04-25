@@ -1,10 +1,19 @@
+require('dotenv').config();
+require('express-async-errors');
+
+// express
 const express = require('express');
 const app = express();
+
+// database
+const connectToMongo = require('./database/connectToMongo');
+
+// error handlers
 const notFound = require('./middleware/not-found');
 const errorHandler = require('./middleware/errorHandler');
-const connectToMongo = require('./database/connectToMongo');
+
+// routers
 const productsRouter = require('./routes/products');
-require('dotenv').config();
 
 // async errors
 
