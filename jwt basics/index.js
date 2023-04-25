@@ -13,14 +13,15 @@ const notFound = require('./middleware/not-found');
 const errorHandler = require('./middleware/errorHandler');
 
 // routers
-
+const jwtRouter = require('./routes/main');
 
 // middleware
 app.use(express.json());
 
 // routes
+app.use('/api/v1/jwtBasics/', jwtRouter);
 
-
+// error catching middlewares
 app.use(notFound);
 app.use(errorHandler);
 
@@ -30,11 +31,11 @@ const start = async () => {
   try {
     await connectToMongo(process.env.MONGO_URI);
     console.log("connected to database successfully");
-    app.listen(port,console.log(`server is listening on port ${port}`));
-} catch (error) {
+    app.listen(port, console.log(`server is listening on port ${port}`));
+  } catch (error) {
     console.log("couldn't connect to database");
     console.log("Adhanala server start panna mudiyathu");
-}
+  }
 }
 
 start();
