@@ -6,7 +6,7 @@ const getAllProductsStatic = async (req, res) => {
 }
 
 const getAllProducts = async (req, res) => {
-    const { name, company, featured, sort, fields, limit } = req.query;
+    const { name, company, featured, sort, fields, numericFilters } = req.query;
     const queryObject = {};
 
     if (featured)
@@ -15,23 +15,53 @@ const getAllProducts = async (req, res) => {
         queryObject.company = company;
     if (name)
         queryObject.name = { $regex: name, $options: 'i' };
+    if (numericFilters) {
+        const operatorsMap = {
+            '>': '$gt',
+            '<': '$lt',
+            '=': '$eq',
+            '>=': '$gte',
+            '<=': '$lte',
+        }
+
+        // no idea how this regex works :)        
+        const regEx = /\b(>|<|=|>=|<=)\b/g;
+
+        let filters = numericFilters.replace(regEx, (match) => {
+            return `-${operatorsMap[match]}-`;
+        });
+
+        const options = ['price', 'rating'];
+
+        filters = filters.split(',');
+        filters.forEach((item) => {
+            const [field, operator, value] = item.split('-');
+            if (options.includes(field)) {
+                queryObject[field] = { [operator]: Number(value) }
+            }
+        })
+
+    }
 
     let result = Products.find(queryObject);
 
-    if(sort){
+    if (sort) {
         const sortList = sort.split(',').join(' ');
         result = result.sort(sortList);
     }
-    else{
+    else {
         result = result.sort('-createdAt');
     }
-    if(fields){
+    if (fields) {
         const selectList = fields.split(',').join(' ');
         result = result.select(selectList);
     }
-    if(limit){
-        result = result.limit(limit);
-    }
+
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    result = result.skip(skip).limit(limit);
 
     const products = await result;
 
